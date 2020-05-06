@@ -7,6 +7,9 @@ import axios from 'axios';
 const instance = axios.create({
 	baseURL: process.env.VUE_APP_API_URL,
 	//VUE_APP 접두사가 붙은 설정 값은 추가적인 .env 설정 없이 바로 가져올 수 있음
+	headers: {
+		Authorization: 'test1234',
+	},
 });
 
 function registerUser(userData) {
