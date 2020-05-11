@@ -12,17 +12,18 @@
 					Text is too long
 				</p>
 			</div>
-			<button type="submit">Create</button>
+			<button type="submit">Edit</button>
 		</form>
 		<p>{{ logMessage }}</p>
 	</div>
 </template>
 
 <script>
-import { createPosts } from '@/api/posts';
+import { editPost, fetchPost } from '@/api/posts';
 export default {
 	data() {
 		return {
+			id: '',
 			title: '',
 			contents: '',
 			logMessage: '',
@@ -36,7 +37,8 @@ export default {
 	methods: {
 		async submitForm() {
 			try {
-				const response = await createPosts({
+				const id = this.$route.params.id;
+				const response = await editPost(id, {
 					title: this.title,
 					contents: this.contents,
 				});
@@ -47,6 +49,12 @@ export default {
 				this.logMessage = error.response.data.message;
 			}
 		},
+	},
+	async created() {
+		const id = this.$route.params.id;
+		const { data } = await fetchPost(id);
+		this.title = data.title;
+		this.contents = data.contents;
 	},
 };
 </script>

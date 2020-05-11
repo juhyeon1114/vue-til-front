@@ -3,9 +3,9 @@
 		<div>{{ postItem.title }}</div>
 		<div>{{ postItem.contents }}</div>
 		<div>
-			{{ postItem.createdAt }}
+			<small>{{ postItem.createdAt | formatDate }}</small>
 			<div>
-				<span>생성</span> |
+				<span @click="routeEditPage">수정</span> |
 				<span @click="deleteItem">삭제</span>
 			</div>
 		</div>
@@ -21,12 +21,20 @@ export default {
 			required: true,
 		},
 	},
+	// filters: {
+	// 	formatDate(value) {
+	// 		return new Date(value);
+	// 	},
+	// },
 	methods: {
 		async deleteItem() {
 			if (confirm('do you want to delete it?')) {
 				await deletePost(this.postItem._id);
 				this.$emit('refresh');
 			}
+		},
+		routeEditPage() {
+			this.$router.push(`/post/${this.postItem._id}`);
 		},
 	},
 };
