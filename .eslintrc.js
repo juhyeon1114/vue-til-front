@@ -21,7 +21,6 @@ module.exports = {
       bracketSpacing: true,
       arrowParens: 'avoid',
     }],
-    
   },
   overrides: [
     {
